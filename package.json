@@ -1,0 +1,32 @@
+{
+  "name": "ld-react",
+  "version": "0.0.1",
+  "description": "Launch Darkly React integration library using context api and suspense",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "rimraf lib/* && babel src -d lib --ignore *.test.js",
+    "lint": "eslint --cache --format 'node_modules/eslint-friendly-formatter' ./src",
+    "prep-publish": "npm run build && npm version patch -m 'Upgrade to %s' && npm publish && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yusinto/ld-react.git"
+  },
+  "keywords": [
+    "launch",
+    "darkly",
+    "react",
+    "context",
+    "suspense",
+    "feature",
+    "flag",
+    "toggle"
+  ],
+  "author": "Yusinto Ngadiman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yusinto/ld-react/issues"
+  },
+  "homepage": "https://github.com/yusinto/ld-react#readme"
+}
