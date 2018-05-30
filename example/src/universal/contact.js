@@ -20,9 +20,7 @@ class Contact extends Component {
                                   rel="noopener noreferrer">reactjunkie.com</a>
         </p>
         {
-          // TODO: Fix! This fails if /contact is hit directly because ldclient is not ready yet.
-          // Use a Timeout component to check if ldClient ready
-          this.props.ldClient.variation('dev-test-flag', false) ?
+          this.props.flags.devTestFlag ?
             <div>
               <p>
                 SSE works! If you turn off your flag in launch darkly, your app will respond without a browser refresh.

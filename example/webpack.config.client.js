@@ -5,7 +5,7 @@ const WebpackServeUrl = 'http://localhost:3002';
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: './src/client/index',
+  entry: ['@babel/polyfill', './src/client/index'],
   output: {
     path: path.resolve('dist'),
     publicPath: `${WebpackServeUrl}/dist/`, // MUST BE FULL PATH!

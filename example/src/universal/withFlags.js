@@ -1,11 +1,11 @@
 import React from 'react';
-import {Consumer} from './ldContext';
+import {FlagConsumer} from './ldContext';
 
 const withFlags = (Component) => props =>
-  <Consumer>
+  <FlagConsumer>
     {
-      ldClient => <Component ldClient={ldClient} {...props}/>
+      flags => <Component flags={flags} {...props}/>
     }
-  </Consumer>;
+  </FlagConsumer>;
 
 export default withFlags;

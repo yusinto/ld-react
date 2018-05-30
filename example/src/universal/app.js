@@ -2,6 +2,7 @@ import React from 'react';
 import {Switch, Link, Route, Redirect} from 'react-router-dom';
 import Home from './home';
 import Contact from './contact';
+import withFlagProvider from './withFlagProvider';
 
 const App = () =>
   <div>
@@ -24,4 +25,4 @@ const App = () =>
     </main>
   </div>;
 
-export default App;
+export default withFlagProvider(App);
