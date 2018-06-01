@@ -2,13 +2,13 @@
 
 [![npm version](https://img.shields.io/npm/v/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react) [![npm downloads](https://img.shields.io/npm/dm/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react) [![npm](https://img.shields.io/npm/dt/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react) [![npm](https://img.shields.io/npm/l/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react)
 
-> **A library to integrate launch darkly with react using the context api** :clap:
+> **The quickest and easiest way to integrate launch darkly with react** :clap:
 
-[Launch Darkly](https://launchdarkly.com/faq.html) is a great tool for feature flagging and a/b testing. 
-It has a fully capable [client-side javascript sdk](https://github.com/launchdarkly/js-client), so why this package?
-
-This package uses the new react context api (available from ^16.3.0) so it's now just a 2-step process to use
-feature flags in your app.  
+Why this package?
+* Easy and fast to use. Two steps to get feature flags into your react app.
+* Supports subscription out of the box. You get live changes on the client as you toggle features.
+* You automatically get camelCased keys as opposed to the default kebab-cased.
+* No need for redux! This package uses the new context api which is available from react ^16.3.0. 
  
 ## Installation
 
