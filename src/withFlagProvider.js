@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import React, {Component} from 'react';
 import {Provider} from './context';
 import camelCase from 'lodash/camelCase';
