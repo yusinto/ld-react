@@ -10,6 +10,10 @@ Why this package?
 * You automatically get camelCased keys as opposed to the default kebab-cased.
 * No need for redux! This package uses the new context api which is available from react ^16.3.0. 
  
+## Dependency
+
+This needs react ^16.4.0! It won't work otherwise.
+
 ## Installation
 
 yarn add ld-react
