@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch, Link, Route, Redirect} from 'react-router-dom';
 import Home from './home';
 import Contact from './contact';
-import withFlagProvider from './withFlagProvider';
+import {withFlagProvider} from 'ld-react';
 
 const App = () =>
   <div>
@@ -25,4 +25,6 @@ const App = () =>
     </main>
   </div>;
 
-export default withFlagProvider(App);
+// Set clientSideId to your own Client-side ID. You can find this in
+// the dashboard under Account settings / Projects
+export default withFlagProvider(App, {clientSideId: 'your-client-side-id'});
