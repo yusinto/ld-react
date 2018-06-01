@@ -35,6 +35,7 @@
     "@babel/node": "^7.0.0-beta.42",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.49",
     "@babel/plugin-transform-async-to-generator": "^7.0.0-beta.49",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.42",
     "@babel/preset-react": "^7.0.0-beta.49",
     "babel-eslint": "^8.2.2",

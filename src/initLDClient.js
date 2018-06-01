@@ -1,4 +1,3 @@
-import '@babel/polyfill';
 import camelCase from 'lodash/camelCase';
 import ldClientPackage from 'ldclient-js';
 import initUser from './initUser';
