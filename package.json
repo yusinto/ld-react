@@ -51,6 +51,7 @@
     "testdouble": "^3.6.0"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.0.0-beta.49",
     "ip": "^1.1.3",
     "ldclient-js": "^2.1.0",
     "lodash": "^4.16.3",
