@@ -1,6 +1,6 @@
 {
   "name": "ld-react",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "Launch Darkly React integration library using context api and suspense",
   "main": "lib/index.js",
   "scripts": {
