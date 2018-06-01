@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react) [![npm downloads](https://img.shields.io/npm/dm/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react) [![npm](https://img.shields.io/npm/dt/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react) [![npm](https://img.shields.io/npm/l/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react)
 
-> **The quickest and easiest way to integrate launch darkly with react** :clap:
+> **The quickest and easiest way to integrate launch darkly with react** :tada:
 
 Why this package?
 * Easy and fast to use. Two steps to get feature flags into your react app.
@@ -42,7 +42,7 @@ yarn add ld-react
     export default withFlags(Home);
     ```
 
-That's it.
+That's it!
 
 ## API
 ### withFlagProvider(Component, {clientSideId, user, options})
