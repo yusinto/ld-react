@@ -46,7 +46,9 @@ That's it.
 
 ## API
 ### withFlagProvider(Component, {clientSideId, user, options})
-This is a hoc which accepts a component and a config object with the above properties. Only `clientSideId` is mandatory.
+This is a hoc which accepts a component and a config object with the above properties. 
+`Component` and `clientSideId` are mandatory.
+
 For example:
 
 ```javascript
@@ -80,7 +82,7 @@ The `options` property is optional. It can be used to pass in extra options such
 For example:
 
 ```javascript
-withFlagProvider({
+withFlagProvider(Component, {
     clientSideId,
     options: {
       bootstrap: 'localStorage',
@@ -89,7 +91,7 @@ withFlagProvider({
 ```
 
 ### withFlags(Component)
-This is a hoc which passes all your flags to the specified component via props. Your flags will be available as
+This is a hoc which passes all your flags to the specified component via props. Your flags will be available
 as camelCased properties under `this.props.flags`. For example:
 
 ```js
