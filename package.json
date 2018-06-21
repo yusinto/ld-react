@@ -7,7 +7,8 @@
     "test": "jest",
     "build": "rimraf lib/* && babel src -d lib --ignore *.test.js",
     "lint": "eslint --cache --format 'node_modules/eslint-friendly-formatter' ./src",
-    "prep-publish": "npm run build && npm version patch -m 'Upgrade to %s' && npm publish && git push"
+    "prep-publish": "npm run build && npm version patch -m 'Upgrade to %s' && npm publish && git push",
+    "stream": "node src/stream"
   },
   "repository": {
     "type": "git",
@@ -54,6 +55,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.49",
     "@babel/runtime": "^7.0.0-beta.49",
+    "eventsource": "^1.0.5",
     "ip": "^1.1.3",
     "ldclient-js": "^2.1.0",
     "lodash": "^4.16.3",
