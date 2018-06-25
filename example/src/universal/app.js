@@ -30,6 +30,15 @@ const NavItemStyles = styled.div`
   width: 200px;
 `;
 
+const ArrowUp = styled.div`
+  margin-left: 40px;
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #73AD21;
+`;
+
 const ProductsTitle = styled.div`
   opacity: ${props => props.showHideProductsNav ? 0.5 : 1}
 `;
@@ -46,13 +55,16 @@ const ProductsNav = styled.div`
 class NavItem extends Component {
   render() {
     return this.props.target ? ReactDom.createPortal(
-      <NavItemStyles>
-        <ul>
-          <li>Payments</li>
-          <li>Billing</li>
-          <li>Connect</li>
-        </ul>
-      </NavItemStyles>, this.props.target)
+      <div>
+        <ArrowUp/>
+        <NavItemStyles>
+          <ul style={{margin: '0px'}}>
+            <li>Payments</li>
+            <li>Billing</li>
+            <li>Connect</li>
+          </ul>
+        </NavItemStyles>
+      </div>, this.props.target)
       : 'no target';
   }
 }
@@ -86,7 +98,7 @@ class App extends Component {
                                showHideProductsNav={this.state.showHideProductsNav}>
                   Products
                 </ProductsTitle>
-                <ProductsNav innerRef={this.productsNav} showHideProductsNav={this.state.showHideProductsNav}/>
+                <ProductsNav innerRef={this.productsNav} showHideProductsNav={true}/>
                 <div>Developers</div>
                 <div>Company</div>
               </GridItem>
