@@ -14,7 +14,6 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <h1>Welcome to ld-react example</h1>
         <div>
           To run this example:
           <ul>

@@ -4,12 +4,12 @@ import {Switch, Link, Route, Redirect} from 'react-router-dom';
 import Home from './home';
 import Contact from './contact';
 import {withFlagProvider} from 'ld-react';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 100px 100px 100px 100px 100px 100px;
-  grid-template-rows: 50px;
+  grid-template-rows: 30px 50px;
 `;
 
 const GridItem = styled.div`
@@ -23,13 +23,6 @@ const GridItem = styled.div`
   position: relative;
 `;
 
-const NavItemStyles = styled.div`
-  color: white;
-  border-radius: 15px;
-  background: #73AD21;
-  width: 200px;
-`;
-
 const ArrowUp = styled.div`
   margin-left: 40px;
   width: 0; 
@@ -39,52 +32,156 @@ const ArrowUp = styled.div`
   border-bottom: 5px solid #73AD21;
 `;
 
-const ProductsTitle = styled.div`
-  opacity: ${props => props.showHideProductsNav ? 0.5 : 1}
+const MenuTitle = styled.div`
+  &:hover {
+    opacity: 0.5;
+  }
+  flex-grow: 1;
+  text-align: center;
 `;
 
-const ProductsNav = styled.div`
-  display: ${props => props.showHideProductsNav ? 'block' : 'none'};
+const MoveItemDevelopers = keyframes`
+  from {
+    left: 180px;
+  }
+  
+  to {
+    left: 280px; 
+  }
+`;
+
+const MoveItemCompany = keyframes`
+  from {
+    left: 280px;
+  }
+  
+  to {
+    left: 380px; 
+  }
+`;
+
+const GridItem2 = styled.div`
+  // background: #73AD21;
+  grid-column: 1 / span 6
+  grid-row: 2 / span 1
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  color: #fff;
+  position: relative;
+  align-self: start;
+`;
+
+const ShowItem = keyframes`
+  from {
+    opacity: 0;
+    transform: skew(-15deg);
+  }
+  
+  to {
+    opacity: 1;
+  }
+`;
+
+const HideItem = keyframes`
+  from {
+    opacity: 1;
+  }
+  
+  to {
+    opacity: 0;
+  }
+`;
+
+const ProductItem = styled.div`
+  background: #73AD21;
   position: absolute;
   top: 0;
-  left: 0;
-  margin-top: 50px
+  left: 180px;
+  width: 250px;
+  height: 350px;
+  opacity: 1;
+  border-radius: 5px;
+  animation-duration: ${props => {
+  if (props.animation === 'move') return '0.4s';
+  if (props.animation === 'show') return '0.6s';
+  return '0.8s';
+}
+  };
+  animation-name: ${({animation, category}) => {
+  if (animation === 'move') {
+    if (category === 'products') return ShowItem;
+    if (category === 'developers') return MoveItemDevelopers;
+    if (category === 'company') return MoveItemCompany;
+  }
+
+  if (animation === '') {
+    return '';
+  }
+
+  return animation === 'show' ? ShowItem : HideItem;
+}};
+  animation-fill-mode: forwards;
 `;
 
-
-class NavItem extends Component {
-  render() {
-    return this.props.target ? ReactDom.createPortal(
-      <div>
-        <ArrowUp/>
-        <NavItemStyles>
-          <ul style={{margin: '0px'}}>
-            <li>Payments</li>
-            <li>Billing</li>
-            <li>Connect</li>
-          </ul>
-        </NavItemStyles>
-      </div>, this.props.target)
-      : 'no target';
+const Item = styled.div`
+  background: ${props => {
+  switch(props.parent) {
+    case 'developers':
+      return 'red';
+    case 'company':
+      return 'blue';
+    default:
+      return '#73AD21';
   }
-}
+}};
+  position: absolute;
+  top: 0;
+  left: ${props => {
+    switch(props.parent) {
+      case 'developers':
+        return '280px';
+      case 'company':
+        return '380px';
+      default:
+        return '180px';
+    }
+}};
+  width: 250px;
+  height: 350px;
+  opacity: 1;
+  border-radius: 5px;
+  opacity: 0;
+  animation-duration: 0.8s;
+  animation-name: ${props => {
+    
+}}
+`;
 
 class App extends Component {
-  state = {showHideProductsNav: false};
-
-  constructor(props) {
-    super(props);
-    this.productsNav = React.createRef();
-  }
+  state = {animation: ''};
 
   onMouseEnter = () => {
-    console.log('enter');
-    this.setState({showHideProductsNav: true});
+    this.setState((prevState) => {
+      if (!prevState.animation || prevState.animation === 'hide') { // initial state
+        return {animation: 'show'};
+      }
+    });
   };
 
   onMouseLeave = () => {
-    console.log('leave');
-    this.setState({showHideProductsNav: false});
+    this.setState({animation: 'hide'});
+  };
+
+  onMouseEnterTitle = (category) => {
+    console.log('enterTitle');
+    // this.setState({animation: 'move', category});
+  };
+
+  onMouseLeaveTitle = () => {
+    console.log('leaveTitle');
+    // this.setState({animation: 'hide'});
   };
 
   render() {
@@ -93,17 +190,32 @@ class App extends Component {
         <header>
           <nav>
             <GridContainer>
-              <GridItem>
-                <ProductsTitle onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
-                               showHideProductsNav={this.state.showHideProductsNav}>
+              <GridItem onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <MenuTitle onMouseEnter={() => this.onMouseEnterTitle('products')}
+                           onMouseLeave={this.onMouseLeaveTitle}>
                   Products
-                </ProductsTitle>
-                <ProductsNav innerRef={this.productsNav} showHideProductsNav={true}/>
-                <div>Developers</div>
-                <div>Company</div>
+                </MenuTitle>
+                <MenuTitle onMouseEnter={() => this.onMouseEnterTitle('developers')}
+                           onMouseLeave={this.onMouseLeaveTitle}>Developers</MenuTitle>
+                <MenuTitle onMouseEnter={() => this.onMouseEnterTitle('company')} onMouseLeave={this.onMouseLeaveTitle}>Company</MenuTitle>
               </GridItem>
+              <GridItem2>
+                <Item parent="products">
+                  <div>Payments</div>
+                  <div>Billing</div>
+                  <div>Connect</div>
+                </Item>
+                <Item parent="developers">
+                  <div>Documentation</div>
+                  <div>Api</div>
+                </Item>
+                <Item parent="company">
+                  <div>About us</div>
+                  <div>Customers</div>
+                  <div>Jobs</div>
+                </Item>
+              </GridItem2>
             </GridContainer>
-            <NavItem target={this.productsNav.current}/>
           </nav>
         </header>
         <main>
