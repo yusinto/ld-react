@@ -19,17 +19,6 @@ const ArrowUp = styled.div`
   border-right: 5px solid transparent;
   border-bottom: 5px solid #73AD21;
 `;
-const ShowItem = keyframes`
-  from {
-    opacity: 0;
-    transform: skew(-15deg);
-  }
-  
-  to {
-    opacity: 1;
-  }
-`;
-
 const GridItem = styled.div`
   background: #6772e5;
   grid-column: 3 / span 3;
@@ -89,17 +78,23 @@ const MovingDiv = styled.div`
   display: ${props => props.display};
   animation: ${({fadeOut, display, moveFrom, moveTo}) => {
     if (fadeOut) return FadeOut;
-  
     if (display === 'block') {
       if(moveFrom === moveTo) return FadeIn;
       return Move(moveFrom, moveTo);
     }
-
     return ''; // display: none; don't animate
   }}
   
   // fade out and in slower than moving sideways
-  ${({moveFrom, moveTo, fadeOut}) => fadeOut ? '0.7s' : (moveFrom === moveTo) ? '0.6s' : '0.2s'} 
+  ${({fadeOut, display, moveFrom, moveTo}) => {
+    if(fadeOut) return '0.7s';
+    if (display === 'block') {
+      if(moveFrom === moveTo) return '0.6s'; // fade in
+      return '0.2s'; // move
+    }
+    return '0s'; // display: none; don't animate
+  }}
+  
   forwards ease;
 `;
 
