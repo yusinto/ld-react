@@ -76,8 +76,6 @@ const MovingDiv = styled.div`
   top: 30px;
   left: -10px;
   animation: ${({moveFrom, moveTo}) => Move(moveFrom, moveTo)} 0.3s forwards ease;
-  //animation-duration: 0.2s;
-  //animation-fill-mode: forwards;
 `;
 
 const MovingDivContent = styled.div`
