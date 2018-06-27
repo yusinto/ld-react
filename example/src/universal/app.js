@@ -75,7 +75,8 @@ const MovingDiv = styled.div`
   position: absolute;
   top: 30px;
   left: -10px;
-  animation: ${({moveFrom, moveTo}) => Move(moveFrom, moveTo)} 0.3s forwards ease;
+  display: ${props => props.display};
+  animation: ${({display, moveFrom, moveTo}) => display === 'none' ? '' : Move(moveFrom, moveTo)} 0.3s forwards ease;
 `;
 
 const MovingDivContent = styled.div`
@@ -87,14 +88,19 @@ const MovingDivContent = styled.div`
 const getX = {products: '-10px', developers: '90px', company: '190px'};
 
 class App extends Component {
-  state = {moveFrom: '-10px', moveTo: '-10px'};
+  state = {display: 'none', moveFrom: null, moveTo: null};
 
   onMouseEnter = (category) => {
     this.setState((prevState) => {
-      const moveFrom = prevState.moveTo;
+      const display = 'block';
       const moveTo = getX[category];
 
+      // on cold start, pop up right from the current item
+      // on warm start, start animation from the previous item
+      const moveFrom = prevState.moveTo ? prevState.moveTo : moveTo;
+
       return {
+        display,
         moveFrom,
         moveTo,
       };
@@ -111,7 +117,7 @@ class App extends Component {
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('products')}>Products</MenuTitle>
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('developers')}>Developers</MenuTitle>
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('company')}>Company</MenuTitle>
-                <MovingDiv moveFrom={this.state.moveFrom} moveTo={this.state.moveTo}>
+                <MovingDiv display={this.state.display} moveFrom={this.state.moveFrom} moveTo={this.state.moveTo}>
                   <ArrowUp/>
                   <MovingDivContent>
                     <div>item 1</div>
