@@ -50,12 +50,10 @@ const MenuTitle = styled.div`
 
 const Move = (moveFrom, moveTo) => keyframes`
   from {
-    opacity: ${moveFrom === moveTo ? 0 : 1}; // only fade in on cold start
     left: ${moveFrom};
   }
   
   to {
-    opacity: 1;
     left: ${moveTo};
   }
 `;
