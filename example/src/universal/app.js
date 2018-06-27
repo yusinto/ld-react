@@ -135,6 +135,8 @@ class App extends Component {
   componentDidUpdate() {
     if (this.state.fadeOut) {
       // HACK: reset state after fading out the div
+      // TODO: use animationend to detect end of animation and set this
+      // https://developer.mozilla.org/en-US/docs/Web/Events/animationend
       setTimeout(() => this.setState({display: 'none', moveFrom: null, moveTo: null, fadeOut: false}), 200);
     }
   }
