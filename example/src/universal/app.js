@@ -84,7 +84,8 @@ const MovingDiv = styled.div`
     if (display === 'block') return Move(moveFrom, moveTo); // animate if div is displayed
   }}
   
-  ${({moveFrom, moveTo}) => moveFrom === moveTo ? '0.6s' : '0.3s'} // on cold start, fade in slower 
+  // fade out and in slower than moving sideways
+  ${({moveFrom, moveTo, fadeOut}) => fadeOut ? '0.7s' : (moveFrom === moveTo) ? '0.6s' : '0.2s'} 
   forwards ease;
 `;
 
@@ -125,7 +126,7 @@ class App extends Component {
   componentDidUpdate() {
     if (this.state.fadeOut) {
       // HACK: reset state after fading out the div
-      setTimeout(() => this.setState({display: 'none', moveFrom: null, moveTo: null, fadeOut: false}), 100);
+      setTimeout(() => this.setState({display: 'none', moveFrom: null, moveTo: null, fadeOut: false}), 200);
     }
   }
 
