@@ -70,11 +70,11 @@ const Move = (moveFrom, moveTo) => keyframes`
 `;
 
 const MovingDiv = styled.div`
-  width: 100px;
-  height: 100px;
   position: absolute;
   top: 30px;
   left: -10px;
+  width: 100px;
+  height: 100px;
   display: ${props => props.display};
   animation: ${({display, moveFrom, moveTo}) => display === 'none' ? '' : Move(moveFrom, moveTo)} 0.3s forwards ease;
 `;
@@ -107,13 +107,17 @@ class App extends Component {
     });
   };
 
+  onMouseLeave = () => {
+    this.setState({display: 'none', moveFrom: null, moveTo: null});
+  };
+
   render() {
     return (
       <div>
         <header>
           <nav>
             <GridContainer>
-              <GridItem>
+              <GridItem onMouseLeave={this.onMouseLeave}>
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('products')}>Products</MenuTitle>
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('developers')}>Developers</MenuTitle>
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('company')}>Company</MenuTitle>
