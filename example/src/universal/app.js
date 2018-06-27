@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDom from 'react-dom';
 import {Switch, Link, Route, Redirect} from 'react-router-dom';
 import Home from './home';
 import Contact from './contact';
@@ -61,6 +60,17 @@ const Move = (moveFrom, moveTo) => keyframes`
   }
 `;
 
+const FadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: skew(-15deg);
+  }
+  
+  to {
+    opacity: 1;
+  }
+`;
+
 const FadeOut = keyframes`
   from {
     opacity: 1;
@@ -68,6 +78,7 @@ const FadeOut = keyframes`
   
   to {
     opacity: 0;
+    transform: skew(15deg);
   }
 `;
 
@@ -80,8 +91,13 @@ const MovingDiv = styled.div`
   display: ${props => props.display};
   animation: ${({fadeOut, display, moveFrom, moveTo}) => {
     if (fadeOut) return FadeOut;
-    if (display === 'none') return ''; // don't animate at the start
-    if (display === 'block') return Move(moveFrom, moveTo); // animate if div is displayed
+  
+    if (display === 'block') {
+      if(moveFrom === moveTo) return FadeIn;
+      return Move(moveFrom, moveTo);
+    }
+
+    return ''; // display: none; don't animate
   }}
   
   // fade out and in slower than moving sideways
