@@ -61,10 +61,12 @@ const MenuTitle = styled.div`
 
 const Move = (moveFrom, moveTo) => keyframes`
   from {
+    opacity: ${moveFrom === moveTo ? 0 : 1}; // only fade in on cold start
     left: ${moveFrom};
   }
   
   to {
+    opacity: 1;
     left: ${moveTo};
   }
 `;
@@ -76,7 +78,10 @@ const MovingDiv = styled.div`
   width: 100px;
   height: 100px;
   display: ${props => props.display};
-  animation: ${({display, moveFrom, moveTo}) => display === 'none' ? '' : Move(moveFrom, moveTo)} 0.3s forwards ease;
+  animation: 
+    ${({display, moveFrom, moveTo}) => display === 'none' ? '' : Move(moveFrom, moveTo)}
+    ${({moveFrom, moveTo}) => moveFrom === moveTo ? '0.6s' : '0.3s'} // on cold start, fade in slower 
+    forwards ease;
 `;
 
 const MovingDivContent = styled.div`
