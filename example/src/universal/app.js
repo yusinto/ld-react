@@ -31,16 +31,6 @@ const ShowItem = keyframes`
   }
 `;
 
-const HideItem = keyframes`
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
-`;
-
 const GridItem = styled.div`
   background: #6772e5;
   grid-column: 3 / span 3;
@@ -94,7 +84,7 @@ const MovingDiv = styled.div`
     if (display === 'block') return Move(moveFrom, moveTo); // animate if div is displayed
   }}
   
-  ${({moveFrom, moveTo}) => moveFrom === moveTo ? '0.6s' : '0.2s'} // on cold start, fade in slower 
+  ${({moveFrom, moveTo}) => moveFrom === moveTo ? '0.6s' : '0.3s'} // on cold start, fade in slower 
   forwards ease;
 `;
 
@@ -132,7 +122,7 @@ class App extends Component {
     this.setState((prevState) => ({fadeOut: true, moveFrom: prevState.moveTo}));
   };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate() {
     if (this.state.fadeOut) {
       // HACK: reset state after fading out the div
       setTimeout(() => this.setState({display: 'none', moveFrom: null, moveTo: null, fadeOut: false}), 100);
