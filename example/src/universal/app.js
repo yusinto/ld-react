@@ -71,17 +71,31 @@ const Move = (moveFrom, moveTo) => keyframes`
   }
 `;
 
+const FadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  
+  to {
+    opacity: 0;
+  }
+`;
+
 const MovingDiv = styled.div`
   position: absolute;
   top: 30px;
-  left: -10px;
+  left: ${props => props.moveFrom};
   width: 100px;
   height: 100px;
   display: ${props => props.display};
-  animation: 
-    ${({display, moveFrom, moveTo}) => display === 'none' ? '' : Move(moveFrom, moveTo)}
-    ${({moveFrom, moveTo}) => moveFrom === moveTo ? '0.6s' : '0.3s'} // on cold start, fade in slower 
-    forwards ease;
+  animation: ${({fadeOut, display, moveFrom, moveTo}) => {
+    if (fadeOut) return FadeOut;
+    if (display === 'none') return ''; // don't animate at the start
+    if (display === 'block') return Move(moveFrom, moveTo); // animate if div is displayed
+  }}
+  
+  ${({moveFrom, moveTo}) => moveFrom === moveTo ? '0.6s' : '0.2s'} // on cold start, fade in slower 
+  forwards ease;
 `;
 
 const MovingDivContent = styled.div`
@@ -93,10 +107,11 @@ const MovingDivContent = styled.div`
 const getX = {products: '-10px', developers: '90px', company: '190px'};
 
 class App extends Component {
-  state = {display: 'none', moveFrom: null, moveTo: null};
+  state = {display: 'none', moveFrom: null, moveTo: null, fadeOut: false};
 
   onMouseEnter = (category) => {
     this.setState((prevState) => {
+      const fadeOut = false;
       const display = 'block';
       const moveTo = getX[category];
 
@@ -105,6 +120,7 @@ class App extends Component {
       const moveFrom = prevState.moveTo ? prevState.moveTo : moveTo;
 
       return {
+        fadeOut,
         display,
         moveFrom,
         moveTo,
@@ -113,8 +129,15 @@ class App extends Component {
   };
 
   onMouseLeave = () => {
-    this.setState({display: 'none', moveFrom: null, moveTo: null});
+    this.setState((prevState) => ({fadeOut: true, moveFrom: prevState.moveTo}));
   };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.fadeOut) {
+      // HACK: reset state after fading out the div
+      setTimeout(() => this.setState({display: 'none', moveFrom: null, moveTo: null, fadeOut: false}), 100);
+    }
+  }
 
   render() {
     return (
@@ -126,7 +149,10 @@ class App extends Component {
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('products')}>Products</MenuTitle>
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('developers')}>Developers</MenuTitle>
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('company')}>Company</MenuTitle>
-                <MovingDiv display={this.state.display} moveFrom={this.state.moveFrom} moveTo={this.state.moveTo}>
+                <MovingDiv display={this.state.display}
+                           moveFrom={this.state.moveFrom}
+                           moveTo={this.state.moveTo}
+                           fadeOut={this.state.fadeOut}>
                   <ArrowUp/>
                   <MovingDivContent>
                     <div>item 1</div>
