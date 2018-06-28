@@ -8,7 +8,7 @@ import styled, {keyframes} from 'styled-components';
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 100px 100px 100px 100px 100px 100px;
-  grid-template-rows: 30px 50px;
+  grid-template-rows: 30px;
 `;
 
 const ArrowUp = styled.div`
@@ -66,6 +66,7 @@ const FadeOut = keyframes`
   to {
     opacity: 0;
     transform: skew(15deg);
+    z-index: -1; // HACK: do this so hidden div does not block other elements on the page! We should have set display: none here, but its too hard
   }
 `;
 
@@ -77,23 +78,23 @@ const MovingDiv = styled.div`
   height: 100px;
   display: ${props => props.display};
   animation: ${({fadeOut, display, moveFrom, moveTo}) => {
-    if (fadeOut) return FadeOut;
-    if (display === 'block') {
-      if(moveFrom === moveTo) return FadeIn;
-      return Move(moveFrom, moveTo);
-    }
-    return ''; // display: none; don't animate
-  }}
+  if (fadeOut) return FadeOut;
+  if (display === 'block') {
+    if (moveFrom === moveTo) return FadeIn;
+    return Move(moveFrom, moveTo);
+  }
+  return ''; // display: none; don't animate
+}}
   
   // fade out and in slower than moving sideways
   ${({fadeOut, display, moveFrom, moveTo}) => {
-    if(fadeOut) return '0.7s';
-    if (display === 'block') {
-      if(moveFrom === moveTo) return '0.6s'; // fade in
-      return '0.2s'; // move
-    }
-    return '0s'; // display: none; don't animate
-  }}
+  if (fadeOut) return '0.7s';
+  if (display === 'block') {
+    if (moveFrom === moveTo) return '0.6s'; // fade in
+    return '0.2s'; // move
+  }
+  return '0s'; // display: none; don't animate
+}}
   
   forwards ease;
 `;
@@ -115,9 +116,14 @@ class App extends Component {
       const display = 'block';
       const moveTo = getX[category];
 
-      // on cold start, pop up right from the current item
-      // on warm start, start animation from the previous item
-      const moveFrom = prevState.moveTo ? prevState.moveTo : moveTo;
+      let moveFrom;
+      if (prevState.fadeOut || !prevState.moveTo) {
+        // on cold start, pop up right from the current item
+        moveFrom = moveTo;
+      } else {
+        // on warm start, start animation from the previous item
+        moveFrom = prevState.moveTo;
+      }
 
       return {
         fadeOut,
@@ -131,15 +137,6 @@ class App extends Component {
   onMouseLeave = () => {
     this.setState((prevState) => ({fadeOut: true, moveFrom: prevState.moveTo}));
   };
-
-  componentDidUpdate() {
-    if (this.state.fadeOut) {
-      // HACK: reset state after fading out the div
-      // TODO: use animationend to detect end of animation and set this
-      // https://developer.mozilla.org/en-US/docs/Web/Events/animationend
-      setTimeout(() => this.setState({display: 'none', moveFrom: null, moveTo: null, fadeOut: false}), 200);
-    }
-  }
 
   render() {
     return (

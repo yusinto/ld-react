@@ -14,13 +14,13 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div>
-          To run this example:
-          <ul>
-            <li>In app.js, set clientSideId to your own Client-side ID. You can find this in the dashboard underAccount settings / Projects.</li>
-            <li>Create a flag called 'dev-test-flag' in your project and turn it on and off.</li>
-          </ul>
-        </div>
+        To run this example:
+        <ul>
+          <li>In app.js, set clientSideId to your own Client-side ID. You can find this in the dashboard underAccount
+            settings / Projects.
+          </li>
+          <li>Create a flag called 'dev-test-flag' in your project and turn it on and off.</li>
+        </ul>
         {
           this.props.flags.devTestFlag ?
             <div>
