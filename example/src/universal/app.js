@@ -50,11 +50,14 @@ const Move = (moveFrom, moveTo) => keyframes`
 const FadeIn = keyframes`
   from {
     opacity: 0;
-    transform: skew(-15deg);
+    transform: perspective(50em) rotateX(-70deg);
+    transform-origin: top center;
   }
   
   to {
     opacity: 1;
+    transform: perspective(50em) rotateX(0deg);
+    transform-origin: top center;
   }
 `;
 
@@ -65,7 +68,6 @@ const FadeOut = keyframes`
   
   to {
     opacity: 0;
-    transform: skew(15deg);
     z-index: -1; // HACK: do this so hidden div does not block other elements on the page! We should have set display: none here, but its too hard
   }
 `;
@@ -90,7 +92,7 @@ const MovingDiv = styled.div`
   ${({fadeOut, display, moveFrom, moveTo}) => {
   if (fadeOut) return '0.7s';
   if (display === 'block') {
-    if (moveFrom === moveTo) return '0.6s'; // fade in
+    if (moveFrom === moveTo) return '0.25s'; // fade in
     return '0.2s'; // move
   }
   return '0s'; // display: none; don't animate
