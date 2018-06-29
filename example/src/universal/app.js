@@ -109,12 +109,29 @@ const MovingDivContent = styled.div`
   background: #73AD21;
   border-radius: 5px;
   width: 100%;
+  & > ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 `;
 
 const getX = {products: '-10px', developers: '90px', company: '190px'};
 
+const ListItems = props => {
+  return (
+    <ul style={{listStyleType: 'none', padding: '5px'}}>
+      {props.items.map(i => <li>{i}</li>)}
+    </ul>
+  );
+};
+const TestItems = {
+  products: ['Payments', 'Billing', 'Connect'],
+  developers: ['Documentation', 'Api Reference'],
+  company: ['About', 'Customers', 'Jobs'],
+};
+
 class App extends Component {
-  state = {display: 'none', moveFrom: null, moveTo: null, fadeOut: false};
+  state = {display: 'none', moveFrom: null, moveTo: null, fadeOut: false, category: ''};
 
   onMouseEnter = (category) => {
     this.setState((prevState) => {
@@ -136,12 +153,13 @@ class App extends Component {
         display,
         moveFrom,
         moveTo,
+        category,
       };
     });
   };
 
   onMouseLeave = () => {
-    this.setState((prevState) => ({fadeOut: true, moveFrom: prevState.moveTo}));
+    this.setState((prevState) => ({fadeOut: true, moveFrom: prevState.moveTo,}));
   };
 
   render() {
@@ -160,9 +178,9 @@ class App extends Component {
                            fadeOut={this.state.fadeOut}>
                   <ArrowUp/>
                   <MovingDivContent>
-                    <div>item 1</div>
-                    <div>item 2</div>
-                    <div>item 3</div>
+                    {
+                      this.state.category && <ListItems items={TestItems[this.state.category]}/>
+                    }
                   </MovingDivContent>
                 </MovingDiv>
               </GridItem>
