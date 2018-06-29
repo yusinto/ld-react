@@ -65,13 +65,13 @@ const FadeOut = keyframes`
   from {
     opacity: 1;
     transform: perspective(200px) rotateX(0deg);
-    transform-origin: top center;
+    transform-origin: top right;
   }
   
   to {
     opacity: 0;
     transform: perspective(200px) rotateX(-60deg);
-    transform-origin: top center;
+    transform-origin: top right;
     z-index: -1; // HACK: do this so hidden div does not block other elements on the page! We should have set display: none here, but its too hard
   }
 `;
