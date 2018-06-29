@@ -50,13 +50,13 @@ const Move = (moveFrom, moveTo) => keyframes`
 const FadeIn = keyframes`
   from {
     opacity: 0;
-    transform: perspective(50em) rotateX(-70deg);
+    transform: perspective(200px) rotateX(-60deg);
     transform-origin: top center;
   }
   
   to {
     opacity: 1;
-    transform: perspective(50em) rotateX(0deg);
+    transform: perspective(200px) rotateX(0deg);
     transform-origin: top center;
   }
 `;
@@ -64,10 +64,14 @@ const FadeIn = keyframes`
 const FadeOut = keyframes`
   from {
     opacity: 1;
+    transform: perspective(200px) rotateX(0deg);
+    transform-origin: top center;
   }
   
   to {
     opacity: 0;
+    transform: perspective(200px) rotateX(-60deg);
+    transform-origin: top center;
     z-index: -1; // HACK: do this so hidden div does not block other elements on the page! We should have set display: none here, but its too hard
   }
 `;
