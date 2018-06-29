@@ -6,13 +6,17 @@ import {withFlagProvider} from 'ld-react';
 import styled, {keyframes} from 'styled-components';
 
 const gridRowHeight = 30;
+const arrowHeight = 5;
+
+const fadeOutSeconds = 0.34;
+const fadeInSeconds = 0.25;
+const moveSeconds = 0.2;
+
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 100px 100px 100px 100px 100px 100px;
   grid-template-rows: ${gridRowHeight}px;
 `;
-
-const arrowHeight = 5;
 const ArrowUp = styled.div`
   margin-left: 40px;
   width: 0; 
@@ -39,13 +43,17 @@ const MenuTitle = styled.div`
   text-align: center;
 `;
 
-const Move = (moveFrom, moveTo) => keyframes`
+const Move = (fromData, toData) => keyframes`
   from {
-    left: ${moveFrom}px;
+    left: ${fromData.left}px;
+    width: ${fromData.width}px;
+    height: ${fromData.height}px;
   }
   
   to {
-    left: ${moveTo}px;
+    left: ${toData.left}px;
+    width: ${toData.width}px;
+    height: ${toData.height}px;
   }
 `;
 
@@ -78,38 +86,34 @@ const FadeOut = keyframes`
   }
 `;
 
-const fadeOutSeconds = 0.34;
-const fadeInSeconds = 0.25;
-const moveSeconds = 0.2;
 const MovingDiv = styled.div`
   position: absolute;
   top: ${gridRowHeight}px;
-  left: ${props => props.moveFrom}px;
-  width: ${({data}) => data ? data.width : 100}px;
-  height: ${({data}) => data ? data.height : 100}px;
+  left: ${({fromData}) => fromData ? fromData.left : 0}px;
+  width: ${({fromData}) => fromData ? fromData.width : 0}px;
+  height: ${({fromData}) => fromData ? fromData.height : 0}px;
   display: ${props => props.display};
-  animation: ${({fadeOut, display, moveFrom, moveTo}) => {
+  animation: ${({fadeOut, display, fromData, toData}) => {
   if (fadeOut) return FadeOut;
   if (display === 'block') {
-    if (moveFrom === moveTo) return FadeIn;
-    return Move(moveFrom, moveTo);
+    if (fromData.left === toData.left) return FadeIn;
+    if(fromData) return Move(fromData, toData);
   }
   return ''; // display: none; don't animate
 }}
   
   // fade out and in slower than moving sideways
-  ${({fadeOut, display, moveFrom, moveTo}) => {
+  ${({fadeOut, display, fromData, toData}) => {
   if (fadeOut) return `${fadeOutSeconds}s`;
   if (display === 'block') {
-    if (moveFrom === moveTo) return `${fadeInSeconds}s`; // fade in
-    return `${moveSeconds}s`; // move
+    if (fromData.left === toData.left) return `${fadeInSeconds}s`; // fade in
+    if(fromData) return `${moveSeconds}s`; // move
   }
   return '0s'; // display: none; don't animate
 }}
   
   forwards ease;
 `;
-
 const MovingDivContent = styled.div`
   background: #73AD21;
   border-radius: 5px;
@@ -137,35 +141,34 @@ const MenuData = {
 };
 
 class App extends Component {
-  state = {display: 'none', moveFrom: null, moveTo: null, fadeOut: false, category: ''};
+  state = {display: 'none', fadeOut: false, fromData: null, toData: null};
 
   onMouseEnter = (category) => {
     this.setState((prevState) => {
       const fadeOut = false;
       const display = 'block';
-      const moveTo = MenuData[category].left;
+      const toData = MenuData[category];
 
-      let moveFrom;
-      if (prevState.fadeOut || !prevState.moveTo) {
+      let fromData;
+      if (prevState.fadeOut || !prevState.toData) {
         // on cold start, pop up right from the current item
-        moveFrom = moveTo;
+        fromData = toData;
       } else {
         // on warm start, start animation from the previous item
-        moveFrom = prevState.moveTo;
+        fromData = prevState.toData;
       }
 
       return {
-        fadeOut,
         display,
-        moveFrom,
-        moveTo,
-        category,
+        fadeOut,
+        fromData,
+        toData,
       };
     });
   };
 
   onMouseLeave = () => {
-    this.setState((prevState) => ({fadeOut: true, moveFrom: prevState.moveTo, category: ''}));
+    this.setState((prevState) => ({fadeOut: true, fromData: prevState.toData}));
   };
 
   render() {
@@ -179,15 +182,14 @@ class App extends Component {
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('developers')}>Developers</MenuTitle>
                 <MenuTitle onMouseEnter={() => this.onMouseEnter('company')}>Company</MenuTitle>
                 <MovingDiv display={this.state.display}
-                           moveFrom={this.state.moveFrom}
-                           moveTo={this.state.moveTo}
                            fadeOut={this.state.fadeOut}
-                           data={MenuData[this.state.category]}
+                           fromData={this.state.fromData}
+                           toData={this.state.toData}
                 >
                   <ArrowUp/>
                   <MovingDivContent>
                     {
-                      this.state.category && <List data={MenuData[this.state.category]}/>
+                      this.state.toData && <List data={this.state.toData}/>
                     }
                   </MovingDivContent>
                 </MovingDiv>
