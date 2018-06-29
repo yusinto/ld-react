@@ -94,7 +94,7 @@ const MovingDiv = styled.div`
   
   // fade out and in slower than moving sideways
   ${({fadeOut, display, moveFrom, moveTo}) => {
-  if (fadeOut) return '0.7s';
+  if (fadeOut) return '0.34s';
   if (display === 'block') {
     if (moveFrom === moveTo) return '0.25s'; // fade in
     return '0.2s'; // move
