@@ -5,19 +5,21 @@ import Contact from './contact';
 import {withFlagProvider} from 'ld-react';
 import styled, {keyframes} from 'styled-components';
 
+const gridRowHeight = 30;
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 100px 100px 100px 100px 100px 100px;
-  grid-template-rows: 30px;
+  grid-template-rows: ${gridRowHeight}px;
 `;
 
+const arrowHeight = 5;
 const ArrowUp = styled.div`
   margin-left: 40px;
   width: 0; 
   height: 0; 
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid #73AD21;
+  border-left: ${arrowHeight}px solid transparent;
+  border-right: ${arrowHeight}px solid transparent;
+  border-bottom: ${arrowHeight}px solid #73AD21;
 `;
 const GridItem = styled.div`
   background: #6772e5;
@@ -39,11 +41,11 @@ const MenuTitle = styled.div`
 
 const Move = (moveFrom, moveTo) => keyframes`
   from {
-    left: ${moveFrom};
+    left: ${moveFrom}px;
   }
   
   to {
-    left: ${moveTo};
+    left: ${moveTo}px;
   }
 `;
 
@@ -76,12 +78,15 @@ const FadeOut = keyframes`
   }
 `;
 
+const fadeOutSeconds = 0.34;
+const fadeInSeconds = 0.25;
+const moveSeconds = 0.2;
 const MovingDiv = styled.div`
   position: absolute;
-  top: 30px;
-  left: ${props => props.moveFrom};
-  width: 100px;
-  height: 100px;
+  top: ${gridRowHeight}px;
+  left: ${props => props.moveFrom}px;
+  width: ${({data}) => data ? data.width : 100}px;
+  height: ${({data}) => data ? data.height : 100}px;
   display: ${props => props.display};
   animation: ${({fadeOut, display, moveFrom, moveTo}) => {
   if (fadeOut) return FadeOut;
@@ -94,10 +99,10 @@ const MovingDiv = styled.div`
   
   // fade out and in slower than moving sideways
   ${({fadeOut, display, moveFrom, moveTo}) => {
-  if (fadeOut) return '0.34s';
+  if (fadeOut) return `${fadeOutSeconds}s`;
   if (display === 'block') {
-    if (moveFrom === moveTo) return '0.25s'; // fade in
-    return '0.2s'; // move
+    if (moveFrom === moveTo) return `${fadeInSeconds}s`; // fade in
+    return `${moveSeconds}s`; // move
   }
   return '0s'; // display: none; don't animate
 }}
@@ -109,25 +114,26 @@ const MovingDivContent = styled.div`
   background: #73AD21;
   border-radius: 5px;
   width: 100%;
+  height: 100%;
   & > ul {
     margin-top: 0;
     margin-bottom: 0;
   }
 `;
 
-const getX = {products: '-10px', developers: '90px', company: '190px'};
-
-const ListItems = props => {
+const List = props => {
+  const {data: {items}} = props;
   return (
     <ul style={{listStyleType: 'none', padding: '5px'}}>
-      {props.items.map(i => <li>{i}</li>)}
+      {items.map(i => <li>{i}</li>)}
     </ul>
   );
 };
-const TestItems = {
-  products: ['Payments', 'Billing', 'Connect'],
-  developers: ['Documentation', 'Api Reference'],
-  company: ['About', 'Customers', 'Jobs'],
+
+const MenuData = {
+  products: {left: -10, width: 200, height: 200, items: ['Payments', 'Billing', 'Connect']},
+  developers: {left: 90, width: 300, height: 400, items: ['Documentation', 'Api Reference']},
+  company: {left: 190, width: 450, height: 200, items: ['About', 'Customers', 'Jobs']},
 };
 
 class App extends Component {
@@ -137,7 +143,7 @@ class App extends Component {
     this.setState((prevState) => {
       const fadeOut = false;
       const display = 'block';
-      const moveTo = getX[category];
+      const moveTo = MenuData[category].left;
 
       let moveFrom;
       if (prevState.fadeOut || !prevState.moveTo) {
@@ -159,7 +165,7 @@ class App extends Component {
   };
 
   onMouseLeave = () => {
-    this.setState((prevState) => ({fadeOut: true, moveFrom: prevState.moveTo,}));
+    this.setState((prevState) => ({fadeOut: true, moveFrom: prevState.moveTo, category: ''}));
   };
 
   render() {
@@ -175,11 +181,13 @@ class App extends Component {
                 <MovingDiv display={this.state.display}
                            moveFrom={this.state.moveFrom}
                            moveTo={this.state.moveTo}
-                           fadeOut={this.state.fadeOut}>
+                           fadeOut={this.state.fadeOut}
+                           data={MenuData[this.state.category]}
+                >
                   <ArrowUp/>
                   <MovingDivContent>
                     {
-                      this.state.category && <ListItems items={TestItems[this.state.category]}/>
+                      this.state.category && <List data={MenuData[this.state.category]}/>
                     }
                   </MovingDivContent>
                 </MovingDiv>
