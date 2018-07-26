@@ -1,4 +1,4 @@
-import camelCase from 'lodash/camelCase';
+import camelCase from 'lodash.camelcase';
 import ldClientPackage from 'ldclient-js';
 import initUser from './initUser';
 

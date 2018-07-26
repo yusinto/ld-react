@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Provider} from './context';
-import camelCase from 'lodash/camelCase';
+import camelCase from 'lodash.camelcase';
 import {initLDClient, ldClient} from './initLDClient';
 
 export default (WrappedComponent, {clientSideId, user, options}) => {
