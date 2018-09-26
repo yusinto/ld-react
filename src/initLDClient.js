@@ -1,11 +1,11 @@
 import camelCase from 'lodash.camelcase';
-import ldClientPackage from 'ldclient-js';
+import {initialize as ldClientInitialize} from 'ldclient-js';
 import initUser from './initUser';
 
 export let ldClient;
 
 export const initLDClient = async (clientSideId, user = initUser(), options) => {
-  ldClient = ldClientPackage.initialize(clientSideId, user, options);
+  ldClient = ldClientInitialize(clientSideId, user, options);
 
   return await new Promise(resolve => ldClient.on('ready', () => {
     const rawFlags = ldClient.allFlags();
