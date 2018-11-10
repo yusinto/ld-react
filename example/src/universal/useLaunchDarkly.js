@@ -17,14 +17,14 @@ const useLaunchDarkly = (WrappedComponent, {clientSideId, user, options}) => {
   };
 
   useEffect(async () => {
-    const flags = await initLDClient(clientSideId, user, options);
-    setFlags({flags});
+    const fetchedFlags = await initLDClient(clientSideId, user, options);
+    setFlags({...fetchedFlags});
     subscribeToChanges();
   }, []); // [] means run this effect only once on mount
 
   return (
     <Context.Provider value={flags}>
-      <WrappedComponent />
+      <WrappedComponent/>
     </Context.Provider>
   );
 };
