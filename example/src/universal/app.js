@@ -1,8 +1,8 @@
 import React from 'react';
 import {Switch, Link, Route, Redirect} from 'react-router-dom';
+import {useLaunchDarkly} from 'ld-react';
 import Home from './home';
 import Contact from './contact';
-import useLaunchDarkly from './useLaunchDarkly';
 
 const App = () => (
   <div>

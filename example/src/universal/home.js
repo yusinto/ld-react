@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import useFlags from './useFlags';
+import {useFlags} from 'ld-react';
 
 export default function Home() {
   const [randomNumber, setRandomNumber] = useState(0);

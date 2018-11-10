@@ -12,14 +12,13 @@ const useLaunchDarkly = (WrappedComponent, {clientSideId, user, options}) => {
       for (const key in changes) {
         flattened[camelCase(key)] = changes[key].current;
       }
-      const flags = {...flags, ...flattened};
-      setFlags({flags});
+      setFlags({...flags, ...flattened});
     });
   };
 
   useEffect(async () => {
-    const flags = await initLDClient(clientSideId, user, options);
-    setFlags({flags});
+    const fetchedFlags = await initLDClient(clientSideId, user, options);
+    setFlags({...fetchedFlags});
     subscribeToChanges();
   }, []); // [] means run this effect only once on mount
 
