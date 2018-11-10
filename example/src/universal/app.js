@@ -2,9 +2,9 @@ import React from 'react';
 import {Switch, Link, Route, Redirect} from 'react-router-dom';
 import Home from './home';
 import Contact from './contact';
-import {withFlagProvider} from 'ld-react';
+import useLaunchDarkly from './useLaunchDarkly';
 
-const App = () =>
+const App = () => (
   <div>
     <header>
       <nav>
@@ -23,8 +23,7 @@ const App = () =>
         <Route path="/contact" component={Contact}/>
       </Switch>
     </main>
-  </div>;
+  </div>
+);
 
-// Set clientSideId to your own Client-side ID. You can find this in
-// the dashboard under Account settings / Projects
-export default withFlagProvider(App, {clientSideId: '57df4354dd79c70721bcb507'});
+export default () => useLaunchDarkly(App, {clientSideId: '59b2b2596d1a250b1c78baa3'});

@@ -1,12 +1,12 @@
 import React from 'react';
-import {Consumer} from './context';
+import Context from './context';
 
 const withFlags = (Component) => props => (
-  <Consumer>
+  <Context.Consumer>
     {
       flags => <Component flags={flags} {...props} />
     }
-  </Consumer>
+  </Context.Consumer>
 );
 
 export default withFlags;

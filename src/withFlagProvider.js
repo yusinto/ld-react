@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Provider} from './context';
 import camelCase from 'lodash.camelcase';
+import Context from './context';
 import {initLDClient, ldClient} from './initLDClient';
 
 export default (WrappedComponent, {clientSideId, user, options}) => {
@@ -13,8 +13,7 @@ export default (WrappedComponent, {clientSideId, user, options}) => {
         for (const key in changes) {
           flattened[camelCase(key)] = changes[key].current;
         }
-        const flags = {...this.state.flags, ...flattened};
-        this.setState({flags});
+        this.setState((prevState) => ({flags: {...prevState, ...flattened}}));
       });
     };
 
@@ -26,9 +25,9 @@ export default (WrappedComponent, {clientSideId, user, options}) => {
 
     render() {
       return (
-        <Provider value={this.state.flags}>
+        <Context.Provider value={this.state.flags}>
           <WrappedComponent {...this.props} />
-        </Provider>
+        </Context.Provider>
       );
     }
   }
