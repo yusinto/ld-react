@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`useLaunchDarkly hook initialise ld client and subscribe on mount 1`] = `
+exports[`useLaunchDarkly hook render app 1`] = `
 <div>
   My App
 </div>
