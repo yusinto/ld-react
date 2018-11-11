@@ -6,64 +6,61 @@
 
 Why this package?
 * Easy and fast to use. Two steps to get feature flags into your react app.
+* Uses hooks and context api under the hood. No redux required. 
 * Supports subscription out of the box. You get live changes on the client as you toggle features.
 * You automatically get camelCased keys as opposed to the default kebab-cased.
-* No need for redux! This package uses the new context api which is available from react ^16.3.0. 
  
-## Dependency
-
-This needs react ^16.4.0! It won't work otherwise.
-
 ## Installation
 
 yarn add ld-react
 
 ## Quickstart
 
-1. Wrap your root app `withFlagProvider`:
+1. Pass your app to `useLaunchDarkly` hook:
 
     ```js
-    import {withFlagProvider} from 'ld-react';
+    import {useLaunchDarkly} from 'ld-react';
 
     const App = () =>
       <div>
         <Home />
      </div>;
     
-    export default withFlagProvider(App, {clientSideId: 'your-client-side-id'});
+    export default () => useLaunchDarkly(App, {clientSideId: 'your-client-side-id'});
     ```
 
-2. Wrap your component `withFlags` to get them via props:
+2. `useFlags` in your component to get flags:
 
     ```js
-    import {withFlags} from 'ld-react';
+    import {useFlags} from 'ld-react';
 
-    const Home = props => {
-       // flags are available via props.flags
-       return props.flags.devTestFlag ? <div>Flag on</div> : <div>Flag off</div>;
+    const Home = () => {
+       const {devTestFlag} = useFlags();
+       return devTestFlag ? <div>Flag on</div> : <div>Flag off</div>;
     };
  
-    export default withFlags(Home);
+    export default Home;
     ```
 
-That's it!
+That's it! 
 
 ## API
-### withFlagProvider(Component, {clientSideId, user, options})
-This is a hoc which accepts a component and a config object with the above properties. 
+### useLaunchDarkly(Component, {clientSideId, user, options})
+This is a custom hook which accepts a component and a config object with the above properties. 
 `Component` and `clientSideId` are mandatory.
 
 For example:
 
 ```javascript
-import {withFlagProvider} from 'ld-react';
+import {useLaunchDarkly} from 'ld-react';
 
 const App = () =>
   <div>
     <Home />
  </div>;
 
-export default withFlagProvider(App, {clientSideId: 'your-client-side-id'});
+// GOTCHA: export a function because hooks can only be used inside function components
+export default () => useLaunchDarkly(App, {clientSideId: 'your-client-side-id'});
 ```
 
 The `user` property is optional. You can initialise the sdk with a custom user by specifying one. This must be an object containing
@@ -86,7 +83,7 @@ The `options` property is optional. It can be used to pass in extra options such
 For example:
 
 ```javascript
-withFlagProvider(Component, {
+useLaunchDarkly(Component, {
     clientSideId,
     options: {
       bootstrap: 'localStorage',
@@ -94,29 +91,19 @@ withFlagProvider(Component, {
 });
 ```
 
-### withFlags(Component)
-This is a hoc which passes all your flags to the specified component via props. Your flags will be available
-as camelCased properties under `this.props.flags`. For example:
+### useFlags()
+This is a custom hook which returns an object containing all your flags. Your flags will be available
+as camelCased properties. For example:
 
 ```js
-import {withFlags} from 'ld-react';
+import {useFlags} from 'ld-react';
 
-class Home extends Component {
-  render() {
-    return (
-      <div>
-        {
-          this.props.flags.devTestFlag ? // Look ma, feature flag!
-            <div>Flag on</div>
-            :
-            <div>Flag off</div>
-        }
-      </div>
-    );
-  }
-}
+const Home = () => {
+   const {devTestFlag} = useFlags();
+   return devTestFlag ? <div>Flag on</div> : <div>Flag off</div>;
+};
 
-export default withFlags(Home);
+export default Home;
 ```
 
 ### ldClient
@@ -142,6 +129,6 @@ class Home extends Component {
 For more info on changing user context, see the [official documentation](http://docs.launchdarkly.com/docs/js-sdk-reference#section-changing-the-user-context).
 
 ## Example
-Check the [example](https://github.com/yusinto/ld-react/tree/master/example) for a fully working spa with 
-react and react-router. Remember to enter your client side sdk in the client [root app file](https://github.com/yusinto/ld-react/blob/master/example/src/universal/app.js) 
+Check the [example](https://github.com/yusinto/ld-react/tree/master/examples/hooks) for a fully working spa with 
+react and react-router. Remember to enter your own client side sdk in useLaunchDarkly hook 
 and create a test flag called `dev-test-flag` before running the example!
