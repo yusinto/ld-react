@@ -3715,7 +3715,7 @@ lcid@^2.0.0:
   dependencies:
     invert-kv "^2.0.0"
 
-"ld-react@file:../lib":
+"ld-react@file:../../lib":
   version "0.0.0"
 
 ldclient-js@^2.7.3:
