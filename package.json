@@ -1,6 +1,6 @@
 {
   "name": "ld-react",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.2",
   "description": "Launch Darkly React integration library using context api",
   "main": "lib/index.js",
   "scripts": {
