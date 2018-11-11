@@ -1,13 +1,14 @@
 {
   "name": "ld-react",
-  "version": "1.2.0",
+  "version": "2.0.0-alpha.1",
   "description": "Launch Darkly React integration library using context api",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
     "build": "rimraf lib/* && babel src -d lib --ignore src/**/*.test.js",
     "lint": "eslint --cache --format 'node_modules/eslint-friendly-formatter' ./src",
-    "build-publish": "npm run build && npm version patch -m 'Upgrade to %s' && npm publish && git push"
+    "build-publish": "npm run build && npm version patch -m 'Upgrade to %s' && npm publish && git push",
+    "build-publish-next": "npm run build && npm publish --tag next && git push"
   },
   "repository": {
     "type": "git",
