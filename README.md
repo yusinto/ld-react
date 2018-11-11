@@ -16,7 +16,7 @@ yarn add ld-react
 
 ## Quickstart
 
-1. Pass your app to `useLaunchDarkly` hook:
+1. Call `useLaunchDarkly` hook with your App:
 
     ```js
     import {useLaunchDarkly} from 'ld-react';
