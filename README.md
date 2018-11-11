@@ -12,7 +12,7 @@ Why this package?
  
 ## Installation
 
-yarn add ld-react
+yarn add ld-react@next
 
 ## Quickstart
 
