@@ -32,9 +32,6 @@ app.use((req, res) => {
   res.end(html);
 });
 
-const httpServer = app.listen(PORT, () => {
+export default app.listen(PORT, () => {
   console.log(`Example app listening at ${PORT}...`);
 });
-
-// export httpServer object so universal-hot-reload can access it
-module.exports = httpServer;

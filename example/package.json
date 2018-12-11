@@ -1,7 +1,7 @@
 {
-  "name": "universal-hot-reload-example",
+  "name": "ld-react-example",
   "version": "1.1.0",
-  "description": "Example of universal-hot-reload usage for universally bundled apps",
+  "description": "Example usage of ld-react",
   "main": "src/server/index.js",
   "scripts": {
     "start": "node src/server/index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yusinto/universal-hot-reload.git"
+    "url": "https://github.com/yusinto/ld-react.git"
   },
   "keywords": [
     "universal",
@@ -24,37 +24,37 @@
   "author": "Yus Ng",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/yusinto/universal-hot-reload"
+    "url": "https://github.com/yusinto/ld-react"
   },
-  "homepage": "https://github.com/yusinto/universal-hot-reload",
+  "homepage": "https://github.com/yusinto/ld-react",
   "dependencies": {
-    "@babel/plugin-transform-async-to-generator": "^7.0.0-beta.54",
-    "@babel/polyfill": "^7.0.0-beta.54",
-    "express": "^4.16.3",
+    "@babel/plugin-transform-async-to-generator": "^7.2.0",
+    "@babel/polyfill": "^7.0.0",
+    "express": "^4.16.4",
     "ld-react": "file:../lib",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.54",
-    "@babel/core": "^7.0.0-beta.54",
-    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.54",
-    "@babel/preset-env": "^7.0.0-beta.54",
-    "@babel/preset-react": "^7.0.0-beta.54",
-    "babel-eslint": "^8.2.6",
-    "babel-loader": "^8.0.0-beta.4",
-    "eslint": "^5.6.0",
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "eslint": "^5.10.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
-    "universal-hot-reload": "^1.0.6",
-    "webpack": "^4.16.2",
-    "webpack-cli": "^3.1.0",
+    "universal-hot-reload": "^2.0.1",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
     "webpack-node-externals": "^1.7.2",
-    "webpack-serve": "^2.0.2"
+    "webpack-serve": "^2.0.3"
   }
 }

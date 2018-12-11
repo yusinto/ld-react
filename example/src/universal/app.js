@@ -27,4 +27,4 @@ const App = () =>
 
 // Set clientSideId to your own Client-side ID. You can find this in
 // the dashboard under Account settings / Projects
-export default withFlagProvider(App, {clientSideId: '57df4354dd79c70721bcb507'});
+export default withFlagProvider(App, {clientSideId: '59b2b2596d1a250b1c78baa3'});
