@@ -1,44 +1,34 @@
 import React, {useState} from 'react';
+import YouTube from 'react-youtube';
 import {useFlags} from 'ld-react';
 
 export default function Home() {
-  const [randomNumber, setRandomNumber] = useState(0);
-  const {devTestFlag} = useFlags();
+  const {moonshotDemo} = useFlags();
 
-  const onClickGenerateRandom = () => {
-    const min = 1;
-    const max = 100;
-    const newNumber = Math.floor(Math.random() * (max - min)) + min;
-    setRandomNumber(newNumber);
+  const opts = {
+    height: '390',
+    width: '640',
+    playerVars: { // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+      start: 48,
+    }
   };
 
   return (
     <div>
-      <h1>Welcome to ld-react example</h1>
-      <div>
-        To run this example:
-        <ul>
-          <li>
-            In app.js, set clientSideId to your own Client-side ID. You can find this in the dashboard underAccount
-            settings / Projects.
-          </li>
-          <li>Create a flag called dev-test-flag in your project and turn it on and off.</li>
-        </ul>
-      </div>
       {
-        devTestFlag ?
-          <div>
-            <p>
-              SSE works! If you turn off your flag in launch darkly, your app will respond without a browser refresh.
-              Try it!
-            </p>
-            <button type="button" onClick={onClickGenerateRandom}>Generate random number</button>
-            <p>{randomNumber}</p>
-          </div>
-          :
-          <div>
-            The random number generator is turned off. Go to your launch darkly dashboard to turn it on.
-          </div>
+        moonshotDemo ?
+          <>
+          <h1>Jackpot! Starman lives!</h1>
+          < YouTube
+            videoId="sI66hcu9fIs"
+            opts={opts}
+          />
+          </> :
+          <>
+          <h1>Moonshot: Is it good??</h1>
+          <img src="https://render.fineartamerica.com/images/rendered/default/poster/8/8/break/images-medium-5/michael-jordan-buzzer-beater-brian-reaves.jpg" alt="does it work?"/>
+          </>
       }
     </div>
   );
