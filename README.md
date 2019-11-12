@@ -2,6 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react) [![npm downloads](https://img.shields.io/npm/dm/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react) [![npm](https://img.shields.io/npm/dt/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react) [![npm](https://img.shields.io/npm/l/ld-react.svg?style=flat-square)](https://www.npmjs.com/package/ld-react)
 
+This package has been superseded by the official [LaunchDarkly React SDK](https://github.com/launchdarkly/react-client-sdk). Please use that instead.
+
 > **The quickest and easiest way to integrate launch darkly with react** :tada:
 
 Why this package?
